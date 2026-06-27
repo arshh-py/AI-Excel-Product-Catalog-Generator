@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Edit Product | Inventory Catalog{% endblock %}
+
+{% block content %}
+<section class="edit-layout">
+  <div class="edit-preview">
+    <img src="{{ image_url(product.image_filename) }}" alt="{{ product.product_name }}">
+    <p>{{ product.image_source_url or 'No image source' }}</p>
+  </div>
+
+  <form class="edit-form" method="post" enctype="multipart/form-data">
+    <div>
+      <h1>Edit Product</h1>
+      <p>Change price, product title, or replace the image manually.</p>
+    </div>
+
+    <label for="product_name">Product Name</label>
+    <textarea id="product_name" name="product_name" rows="4" required>{{ product.product_name }}</textarea>
+
+    <label for="price">Your Price</label>
+    <input id="price" name="price" type="text" value="{{ product.price or '' }}" placeholder="Example: 999">
+
+    <label for="image_file">Upload Image</label>
+    <input id="image_file" name="image_file" type="file" accept="image/*">
+
+    <label for="image_url">Or Paste Image URL</label>
+    <input id="image_url" name="image_url" type="url" placeholder="https://example.com/product.jpg">
+
+    <div class="form-actions">
+      <button type="submit">Save Changes</button>
+      <a class="button secondary" href="{{ url_for('admin') }}">Back to Admin</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

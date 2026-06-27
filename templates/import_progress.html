@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Import Progress | Inventory Catalog{% endblock %}
+
+{% block content %}
+<section class="progress-panel" data-job-id="{{ job.id }}">
+  <div class="panel-copy">
+    <h1>Importing Products</h1>
+    <p>{{ job.original_filename }} is being processed in the background. Keep this page open to watch progress.</p>
+  </div>
+
+  <div class="progress-card">
+    <div class="progress-top">
+      <strong id="progressStatus">Starting...</strong>
+      <span id="progressPercent">0%</span>
+    </div>
+    <div class="progress-track" aria-label="Import progress">
+      <div id="progressFill" class="progress-fill" style="width: 0%"></div>
+    </div>
+    <div class="progress-stats">
+      <span><strong id="processedCount">0</strong> processed</span>
+      <span><strong id="totalCount">0</strong> total</span>
+      <span><strong id="importedCount">0</strong> imported</span>
+      <span><strong id="skippedCount">0</strong> skipped</span>
+    </div>
+    <p id="currentProduct" class="current-product">Preparing file...</p>
+    <p id="progressError" class="progress-error" hidden></p>
+    <a id="catalogLink" class="button" href="{{ url_for('index') }}" hidden>Open Catalog</a>
+  </div>
+</section>
+
+<section class="note">
+  <h2>While this runs</h2>
+  <p>Bulk import uses a faster image search. Use Refresh Search from Admin for a deeper search on any product that needs a better image.</p>
+</section>
+{% endblock %}

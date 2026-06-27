@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Catalog | Inventory Catalog{% endblock %}
+
+{% block content %}
+<section class="toolbar">
+  <div>
+    <h1>Product Catalog</h1>
+    <p>{{ total }} product{{ '' if total == 1 else 's' }} in local inventory</p>
+  </div>
+  <div class="toolbar-actions">
+    <a class="button secondary" href="{{ url_for('export_catalog', q=search) }}">Export Catalog</a>
+    <form class="search" method="get" action="{{ url_for('index') }}">
+      <input type="search" name="q" value="{{ search }}" placeholder="Search product titles">
+      <button type="submit">Search</button>
+    </form>
+  </div>
+</section>
+
+{% if products %}
+  <section class="grid">
+    {% for product in products %}
+      <article class="product-card">
+        <div class="image-wrap">
+          <img loading="lazy" src="{{ image_url(product.image_filename) }}" alt="{{ product.product_name }}">
+        </div>
+        <div class="product-info">
+          <h2>{{ product.product_name }}</h2>
+          <p class="price">{{ product.price or 'Price not available' }}</p>
+        </div>
+      </article>
+    {% endfor %}
+  </section>
+
+  <nav class="pagination" aria-label="Catalog pages">
+    {% if page > 1 %}
+      <a href="{{ url_for('index', q=search, page=page-1, per_page=per_page) }}">Previous</a>
+    {% endif %}
+    <span>Page {{ page }} of {{ total_pages }}</span>
+    {% if page < total_pages %}
+      <a href="{{ url_for('index', q=search, page=page+1, per_page=per_page) }}">Next</a>
+    {% endif %}
+  </nav>
+{% else %}
+  <section class="empty">
+    <h2>No products found</h2>
+    <p>Upload an Excel file with Product Name and Price columns to create your catalog.</p>
+    <a class="button" href="{{ url_for('upload') }}">Upload Excel</a>
+  </section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Upload Excel | Inventory Catalog{% endblock %}
+
+{% block content %}
+<section class="panel">
+  <div class="panel-copy">
+    <h1>Upload Inventory Excel</h1>
+    <p>The file must be .xlsx and include Product Name and Price columns. After upload, import runs in the background with a live progress screen.</p>
+  </div>
+
+  <form class="upload-box" method="post" enctype="multipart/form-data">
+    <label for="excel_file">Excel file</label>
+    <input id="excel_file" name="excel_file" type="file" accept=".xlsx" required>
+    <button type="submit">Start Import</button>
+  </form>
+</section>
+
+<section class="note">
+  <h2>Import behavior</h2>
+  <p>Rows without a Product Name are skipped. Price is saved for display only and is never used for image search or identification.</p>
+</section>
+{% endblock %}
